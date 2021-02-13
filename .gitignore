@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+#This is what usually ends up in my gitignore:
+node_modules
+hidden_resources/
+.DS_Store
+package-lock.json
