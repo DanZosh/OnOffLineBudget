@@ -20,6 +20,16 @@ request.onupgradeneeded = ({target}) =>{
             )
 }
 
+//write a function to add records to our dataStore
+function saveRecord(transactionRecord){
+    // STEP 1: Open a transaction on my objectStore with read/write capabilities on our `pending` objectStore
+       const transaction = db.transaction(["pending"], "readwrite");
+    //STEP 2: Connect to the `pending` objectStore in my transaction
+       const pendingStore = transaction.objectStore("pending")
+    //STEP 3: USE the connection to get all the records from the `pending` objectStore and save it to a variable to be used later
+       const getAllRecords = pendingStore.add(transactionRecord);
+}
+
 //we want to check if our internet connection is working so we can identify what to do with our user's requests
 function checkDatabase () {
      // STEP 1: Open a transaction on my objectStore with read/write capabilities on our `pending` objectStore
@@ -53,6 +63,5 @@ function checkDatabase () {
     }
 }
 
-getAllRecords.onsuccess = function(){
-    // if getAllRecords is successful from our checkDatabase function, then we are connected to the internet
-}
+// Add an eventListener so that if the browser comes back online, we run the checkDatabase function, which will update our database and clear any transactions that have been stored offline in the `pending` object Store
+window.addEventListener('online', checkDatabase);
